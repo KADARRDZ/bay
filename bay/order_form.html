@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب لعبة - متجر Birles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5865F2; /* لون ديسكورد */
+            --secondary: #00a8ff;
+            --dark: #2D3436;
+            --light: #F5F6FA;
+            --success: #00B894;
+            --warning: #F39C12;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #36393f; /* خلفية مشابهة لديسكورد */
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #dcddde;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #2f3136;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #b9bbbe;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #202225;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 16px;
+            background-color: #40444b;
+            color: #dcddde;
+        }
+        
+        select:focus, input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .payment-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border: 1px solid #202225;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #40444b;
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(88, 101, 242, 0.1);
+        }
+        
+        .payment-option i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .checkbox-group {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .checkbox-label input {
+            margin-left: 10px;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #4752c4;
+        }
+        
+        button:disabled {
+            background-color: #4e5d94;
+            cursor: not-allowed;
+        }
+        
+        .success-message {
+            display: none;
+            background-color: var(--success);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .error-message {
+            display: none;
+            background-color: #ed4245;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">B</div>
+            <h1>طلب لعبة من متجر Birles</h1>
+        </div>
+        
+        <form id="gameForm">
+            <div class="form-group">
+                <label for="gameName">
+                    <i class="fas fa-gamepad"></i> اسم اللعبة:
+                </label>
+                <input type="text" id="gameName" placeholder="أدخل اسم اللعبة المطلوبة" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gameType">
+                    <i class="fas fa-list-alt"></i> نوع اللعبة:
+                </label>
+                <select id="gameType" required>
+                    <option value="" selected disabled>اختر نوع اللعبة</option>
+                    <option value="rust">Rust</option>
+                    <option value="gta5">GTA 5</option>
+                    <option value="assetto_corsa">Assetto Corsa</option>
+                    <option value="other">أخرى</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <i class="fas fa-money-bill-wave"></i> طريقة الدفع:
+                </label>
+                <div class="payment-options">
+                    <div class="payment-option" id="creditOption" onclick="selectPayment('credit')">
+                        <i class="fab fa-cc-visa"></i>
+                        <div>كريدت ديسكورد</div>
+                    </div>
+                    <div class="payment-option" id="dinarOption" onclick="selectPayment('dinar')">
+                        <i class="fas fa-money-bill"></i>
+                        <div>دينار جزائري</div>
+                    </div>
+                </div>
+                <input type="hidden" id="paymentMethod" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="discordName">
+                    <i class="fab fa-discord"></i> اسمك في الديسكورد:
+                </label>
+                <input type="text" id="discordName" placeholder="اسم المستخدم#1234" required>
+            </div>
+            
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    أوافق على شروط وأحكام المتجر
+                    <input type="checkbox" id="agreeTerms" required>
+                </label>
+            </div>
+            
+            <button type="submit" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> تأكيد الطلب
+            </button>
+        </form>
+        
+        <div id="successMessage" class="success-message">
+            <i class="fas fa-check-circle"></i> تم إرسال طلبك بنجاح! سيتم التواصل معك قريباً
+        </div>
+        
+        <div id="errorMessage" class="error-message">
+            <i class="fas fa-exclamation-circle"></i> حدث خطأ أثناء إرسال الطلب، يرجى المحاولة لاحقاً
+        </div>
+    </div>
+
+    <script>
+        // استبدل هذا برابط Webhook الخاص بسيرفر ديسكورد
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1354080804438933514/cK_DQ35E_KYQ13LrH7zcn67EpyzLTXPJlV3kC3YiiPNRYwkZ_mSW1fDkEFXCuSpECC1t';
+        
+        function selectPayment(method) {
+            document.getElementById('paymentMethod').value = method;
+            
+            document.getElementById('creditOption').classList.toggle('selected', method === 'credit');
+            document.getElementById('dinarOption').classList.toggle('selected', method === 'dinar');
+        }
+        
+        async function sendToDiscord(data) {
+            try {
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: '**طلب جديد من متجر Birles**',
+                        embeds: [{
+                            title: 'تفاصيل الطلب',
+                            color: 0x5865F2,
+                            fields: [
+                                { name: 'اسم اللعبة', value: data.gameName, inline: true },
+                                { name: 'نوع اللعبة', value: data.gameType, inline: true },
+                                { name: 'طريقة الدفع', value: data.paymentMethod === 'credit' ? 'كريدت ديسكورد' : 'دينار جزائري', inline: true },
+                                { name: 'اسم المستخدم', value: data.discordName, inline: true },
+                                { name: 'وقت الطلب', value: new Date().toLocaleString(), inline: true }
+                            ],
+                            footer: {
+                                text: 'Birles Store - طلبات الألعاب'
+                            }
+                        }]
+                    }),
+                });
+                
+                return response.ok;
+            } catch (error) {
+                console.error('Error sending to Discord:', error);
+                return false;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('gameForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+                
+                const formData = {
+                    gameName: document.getElementById('gameName').value,
+                    gameType: document.getElementById('gameType').value,
+                    paymentMethod: document.getElementById('paymentMethod').value,
+                    discordName: document.getElementById('discordName').value
+                };
+                
+                try {
+                    // إرسال البيانات إلى ديسكورد
+                    const sentSuccessfully = await sendToDiscord(formData);
+                    
+                    if (sentSuccessfully) {
+                        successMessage.style.display = 'block';
+                        errorMessage.style.display = 'none';
+                        form.reset();
+                        document.getElementById('creditOption').classList.remove('selected');
+                        document.getElementById('dinarOption').classList.remove('selected');
+                    } else {
+                        throw new Error('Failed to send to Discord');
+                    }
+                } catch (error) {
+                    successMessage.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> تأكيد الطلب';
+                    
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                        errorMessage.style.display = 'none';
+                    }, 5000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
